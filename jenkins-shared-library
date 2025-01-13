@@ -1,0 +1,30 @@
+// vars/modelTrain.groovy
+def call() {
+    sh """
+        python3 -m pip install -r requirements.txt
+        python3 src/train.py
+    """
+}
+
+// vars/modelTest.groovy
+def call(String environment) {
+    sh """
+        python3 src/test.py ${environment}
+    """
+}
+
+// vars/modelDeploy.groovy
+def call(String environment) {
+    sh """
+        python3 src/deploy.py ${environment}
+    """
+}
+
+// vars/emailNotification.groovy
+def call(String status, String environment) {
+    emailext (
+        subject: "Pipeline Status: ${status} for ${environment}",
+        body: "The pipeline for ${environment} environment has ${status}.",
+        to: 'hamza.awan@systemsltd.com'
+    )
+}
