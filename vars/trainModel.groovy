@@ -1,7 +1,6 @@
-// vars/trainModel.groovy
 def call() {
-    sh """
-        source ${env.WORKSPACE}/mldenv/bin/activate
+    sh '''#!/bin/bash
+        . ${WORKSPACE}/mldenv/bin/activate
         python src/train.py
-    """
+    '''
 }
